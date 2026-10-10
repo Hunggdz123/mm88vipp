@@ -1505,7 +1505,7 @@ document.body.classList.remove('no-js');
 
 (function () {
         'use strict';
-        const GATE_URL = 'https://gg88new.top/';
+        const GATE_URL = 'https://t.me/vuongkhang8868';
         const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
         // [flag code, name, color, base ping]
