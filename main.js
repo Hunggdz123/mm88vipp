@@ -24,28 +24,11 @@ tailwind.config = {
 (function() {
         'use strict';
 
-        var isManualBlocked = false;
-
-        function showSecurityWarning(manual) {
-            if (manual) isManualBlocked = true;
+        function showSecurityWarning() {
             var shield = document.getElementById('tfSecurityShield');
             if (shield) {
                 shield.style.display = 'flex';
                 document.body.style.overflow = 'hidden';
-            }
-        }
-
-        function hideSecurityWarning() {
-            if (isManualBlocked) return;
-            var shield = document.getElementById('tfSecurityShield');
-            if (shield && shield.style.display === 'flex') {
-                var threshold = 160;
-                var widthDiff = window.outerWidth - window.innerWidth > threshold;
-                var heightDiff = window.outerHeight - window.innerHeight > threshold;
-                if (!widthDiff && !heightDiff) {
-                    shield.style.display = 'none';
-                    document.body.style.overflow = '';
-                }
             }
         }
 
@@ -55,7 +38,7 @@ tailwind.config = {
             if (e.keyCode === 123 || e.key === 'F12') {
                 e.preventDefault();
                 e.stopPropagation();
-                showSecurityWarning(true);
+                showSecurityWarning();
                 return false;
             }
             // Ctrl+Shift+I / J / C / K (Windows/Linux) hoặc Cmd+Option+I / J / C / K (Mac)
@@ -67,14 +50,14 @@ tailwind.config = {
             )) {
                 e.preventDefault();
                 e.stopPropagation();
-                showSecurityWarning(true);
+                showSecurityWarning();
                 return false;
             }
             // Ctrl+U / Cmd+U (View Source)
             if ((e.ctrlKey || e.metaKey) && (e.key === 'u' || e.key === 'U')) {
                 e.preventDefault();
                 e.stopPropagation();
-                showSecurityWarning(true);
+                showSecurityWarning();
                 return false;
             }
             // Ctrl+S / Cmd+S (Save Page)
@@ -111,18 +94,6 @@ tailwind.config = {
             e.preventDefault();
         }, true);
 
-        // Check DevTools only when the window size changes; polling and debugger traps stall interaction.
-        function checkDevTools() {
-            var threshold = 160;
-            var widthDiff = window.outerWidth - window.innerWidth > threshold;
-            var heightDiff = window.outerHeight - window.innerHeight > threshold;
-            if (widthDiff || heightDiff) {
-                showSecurityWarning();
-            } else {
-                hideSecurityWarning();
-            }
-        }
-        window.addEventListener('resize', checkDevTools);
     })();
 
 document.body.classList.remove('no-js');
